@@ -7,8 +7,6 @@ import java.util.Optional;
 
 public interface UserRepository extends CrudRepository<User, Long> {
 
-    Optional<User> findFirstById(final long id);
-
     Optional<User> findFirstByName(final String name);
 
 }

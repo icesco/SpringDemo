@@ -52,4 +52,15 @@ public class UserService {
             throw new UserException.UserNotFoundException();
         }
     }
+
+    public void deleteUser(final String username) {
+        Optional<User> requestedUser = repository.findFirstByName(username);
+
+        try {
+            final User unwrappedUser =requestedUser.orElseThrow();
+            repository.delete(unwrappedUser);
+        } catch (Exception exc) {
+            throw new UserException.UserNotFoundException();
+        }
+    }
 }

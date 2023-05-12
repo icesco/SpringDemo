@@ -40,4 +40,9 @@ public class UserController {
     public UserDTO updateUser(@RequestBody UserDTO updatedVersion) {
         return userService.updateUser(updatedVersion);
     }
+
+    @DeleteMapping("delete")
+    public void deleteUser(@RequestParam(value = "name", defaultValue = "") String userName) {
+        userService.deleteUser(userName);
+    }
 }
