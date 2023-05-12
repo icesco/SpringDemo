@@ -1,5 +1,6 @@
 package com.example.demotwo.services;
 
+import com.example.demotwo.error.UserException;
 import com.example.demotwo.mapper.User2UserDtoMapper;
 import com.example.demotwo.model.User;
 import com.example.demotwo.model.UserDTO;
@@ -30,20 +31,25 @@ public class UserService {
         }
     }
 
-    public User addUser(final User user) {
-        return repository.save(user);
+    public UserDTO addUser(final User user) {
+        final User addedUser = repository.save(user);
+        return mapper.entity2dto(addedUser);
     }
 
-    public void updateUser(final User user) {
-        Optional<User> requestedUser = repository.findById(user.getId());
+    public UserDTO updateUser(final UserDTO user) {
+        Optional<User> requestedUser = repository.findFirstByName(user.name());
 
         try {
-            User tobeModified = requestedUser.orElseThrow();
-            tobeModified.copyValues(user);
+            final User unwrappedUser =requestedUser.orElseThrow();
 
-            repository.save(tobeModified);
+            final User modified = mapper.dto2entity(user);
+            modified.setId(unwrappedUser.getId());
+
+
+            final User savedUser = repository.save(modified);
+            return mapper.entity2dto(savedUser);
         } catch (Exception exc) {
-
+            throw new UserException.UserNotFoundException();
         }
     }
 }

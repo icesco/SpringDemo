@@ -24,11 +24,5 @@ public class User {
 
     private String password;
 
-    public void copyValues(final User fromUser) {
-        name = fromUser.name;
-        surname = fromUser.surname;
-        password = fromUser.password;
-        email = fromUser.email;
-    }
 
 }
