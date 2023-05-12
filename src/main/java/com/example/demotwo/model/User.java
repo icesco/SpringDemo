@@ -7,7 +7,6 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
-
 @Entity
 @Getter
 @Setter
@@ -17,11 +16,19 @@ public class User {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private long id;
 
-    private String firstName;
+    private String name;
 
-    private String lastName;
+    private String surname;
 
     private String email;
 
     private String password;
+
+    public void copyValues(final User fromUser) {
+        name = fromUser.name;
+        surname = fromUser.surname;
+        password = fromUser.password;
+        email = fromUser.email;
+    }
+
 }
